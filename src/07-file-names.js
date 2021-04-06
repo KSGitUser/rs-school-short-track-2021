@@ -13,8 +13,18 @@
  * the output should be ["file", "file(1)", "image", "file(1)(1)", "file(2)"]
  *
  */
-function renameFiles(/* names */) {
-  throw new Error('Not implemented');
+function renameFiles(names) {
+  const nameMap = new Map();
+  names.forEach((name) => {
+    if (nameMap.has(name)) {
+      const newNum = nameMap.get(name) + 1;
+      nameMap.set(name, newNum);
+      nameMap.set(`${name}(${nameMap.get(name)})`, 0);
+      return;
+    }
+    nameMap.set(name, 0);
+  });
+  return [...nameMap.keys()];
 }
 
 module.exports = renameFiles;
